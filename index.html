@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canal Linux - Guías y Recomendaciones</title>
+    <meta name="description" content="Recomendaciones oficiales del canal para distribuciones Linux y configuración del sistema.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <style>
+        :root {
+            --primary: #5D5CDE;
+            --secondary: #00D9FF;
+            --accent: #FF6B6B;
+            --success: #4ECDC4;
+            --warning: #FFE66D;
+            --bg-dark: #0F0F23;
+            --bg-darker: #0A0A1A;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+            background-attachment: fixed;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .channel-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .channel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .distro-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .distro-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .distro-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-primary {
+            background: rgba(93, 92, 222, 0.2);
+            color: #a5b4fc;
+            border: 1px solid rgba(93, 92, 222, 0.3);
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-warning {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fde047;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .badge-info {
+            background: rgba(6, 182, 212, 0.2);
+            color: #67e8f9;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .icon-box {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .youtube-btn {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+            color: white;
+        }
+
+        .discord-btn {
+            background: linear-gradient(135deg, #5865F2, #4752C4);
+            color: white;
+        }
+
+        .wiki-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .recommendation-section {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(93, 92, 222, 0.3);
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(93, 92, 222, 0.1) 0%, rgba(0, 217, 255, 0.1) 50%, rgba(255, 107, 107, 0.1) 100%);
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+    <!-- Header -->
+    <header class="hero-bg relative overflow-hidden py-12 px-6 mb-12">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-cyan-900/20"></div>
+        <div class="relative text-center max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                <span class="gradient-text">🐧 Canal Linux Official</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-6">
+                Recomendaciones aprobadas por el <span class="text-purple-400 font-semibold">staff</span>
+            </p>
+        </div>
+    </header>
+
+    <div class="px-6 max-w-6xl mx-auto">
+        <!-- Canal Info -->
+        <section class="mb-12">
+            <div class="channel-card">
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <!-- Avatar del canal -->
+                    <div class="flex-shrink-0">
+                        <div class="w-32 h-32 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full flex items-center justify-center text-6xl border-4 border-purple-500/30">
+                            🐧
+                        </div>
+                    </div>
+                    
+                    <!-- Info del canal -->
+                    <div class="flex-1 text-center lg:text-left">
+                        <h2 class="text-3xl font-bold gradient-text mb-2">Ezku</h2>
+                        <p class="text-gray-300 text-lg mb-4">Tu guía definitiva para el mundo Linux</p>
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-2 mb-6">
+                            <span class="badge badge-primary">Tutorials</span>
+                            <span class="badge badge-success">Reviews</span>
+                            <span class="badge badge-info">Gaming</span>
+                            <span class="badge badge-warning">Tips</span>
+                        </div>
+                        
+                        <!-- Links sociales -->
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                            <a href="#" class="social-btn youtube-btn">
+                                <i class="fab fa-youtube mr-2"></i>
+                                YouTube
+                            </a>
+                            <a href="#" class="social-btn discord-btn">
+                                <i class="fab fa-discord mr-2"></i>
+                                Discord
+                            </a>
+                            <a href="index.html" class="social-btn wiki-btn">
+                                <i class="fas fa-book mr-2"></i>
+                                Wiki Completa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Distros Recomendadas -->
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold gradient-text">🌟 Distros Recomendadas</h2>
+                <a href="index.html" class="social-btn wiki-btn">
+                    <i class="fas fa-external-link-alt mr-2"></i>
+                    Ver Wiki Completa
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Linux Mint -->
+                <div class="distro-card">
+                    <div class="icon-box bg-gradient-to-br from-green-500/20 to-emerald-500/20">
+                        🍃
+                    </div>
+                    <h3 class="text-xl font-bold text-green-400 mb-2">Linux Mint</h3>
+                    <p class="text-gray-300 text-sm mb-3">La más amigable para principiantes</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-success">Principiantes</span>
+                        <span class="badge badge-info">Estable</span>
+                    </div>
+                </div>
+
+                <!-- Zorin OS -->
+                <div class="distro-card">
+                    <div class="icon-box bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
+                        💎
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-400 mb-2">Zorin OS</h3>
+                    <p class="text-gray-300 text-sm mb-3">Diseño elegante y familiar</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-primary">Premium</span>
+                        <span class="badge badge-info">Windows-like</span>
+                    </div>
+                </div>
+
+                <!-- Manjaro -->
+                <div class="distro-card">
+                    <div class="icon-box bg-gradient-to-br from-purple-500/20 to-pink-500/20">
+                        🌊
+                    </div>
+                    <h3 class="text-xl font-bold text-purple-400 mb-2">Manjaro</h3>
+                    <p class="text-gray-300 text-sm mb-3">Arch Linux accesible</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-warning">Rolling</span>
+                        <span class="badge badge-success">Gaming</span>
+                    </div>
+                </div>
+
+                <!-- Ubuntu -->
+                <div class="distro-card">
+                    <div class="icon-box bg-gradient-to-br from-orange-500/20 to-red-500/20">
+                        🐧
+                    </div>
+                    <h3 class="text-xl font-bold text-orange-400 mb-2">Ubuntu</h3>
+                    <p class="text-gray-300 text-sm mb-3">La más conocida y documentada</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-info">LTS</span>
+                        <span class="badge badge-success">Popular</span>
+                    </div>
+                </div>
+
+                <!-- MX Linux -->
+                <div class="distro-card">
+                    <div class="icon-box bg-gradient-to-br from-indigo-500/20 to-purple-500/20">
+                        💨
+                    </div>
+                    <h3 class="text-xl font-bold text-indigo-400 mb-2">MX Linux</h3>
+                    <p class="text-gray-300 text-sm mb-3">Eficiencia y rendimiento</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-success">Ligero</span>
+                        <span class="badge badge-info">Eficiente</span>
+                    </div>
+                </div>
+
+                <!-- Pop! OS -->
+                <div class="distro-card">
+                    <div class="icon-box bg-gradient-to-br from-cyan-500/20 to-teal-500/20">
+                        🚀
+                    </div>
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2">Pop! OS</h3>
+                    <p class="text-gray-300 text-sm mb-3">Optimizado para gaming y desarrollo</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge badge-success">Gaming</span>
+                        <span class="badge badge-primary">NVIDIA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recomendaciones del Staff -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold gradient-text mb-8">📋 Recomendaciones Aprobadas por el Staff</h2>
+            
+            <!-- Primeros Pasos -->
+            <div class="recommendation-section mb-8">
+                <h3 class="text-2xl font-bold text-purple-400 mb-6">
+                    <i class="fas fa-play-circle mr-3"></i>
+                    Primeros Pasos
+                </h3>
+                <div class="step-card">
+                    <h4 class="font-bold text-blue-300 mb-3">🔧 Antes de Instalar</h4>
+                    <p class="text-gray-300 mb-4">
+                        Una vez instalada tu distribución de Linux, es importante seguir correctamente los primeros pasos. 
+                        No cometas errores comunes relacionados con controladores, compatibilidad o paquetes de terceros en general.
+                    </p>
+                    <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                        <p class="text-sm text-gray-300">
+                            <strong>Importante:</strong> Actualiza el sistema, instala controladores necesarios y verifica que todas las funciones básicas trabajen correctamente antes de personalizar.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="step-card">
+                    <h4 class="font-bold text-green-300 mb-3">📱 Recomendaciones Clave</h4>
+                    <ul class="text-gray-300 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-400 mr-3 mt-1"></i>
+                            <span>Prepara una USB con <strong>Ventoy</strong> para tener múltiples distros en un solo dispositivo</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-400 mr-3 mt-1"></i>
+                            <span>Verifica la compatibilidad del Wi-Fi, Bluetooth, sonido, pantalla y touchpad</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-400 mr-3 mt-1"></i>
+                            <span>Prueba la distro en modo Live antes de instalar</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Gaming -->
+            <div class="recommendation-section mb-8">
+                <h3 class="text-2xl font-bold text-pink-400 mb-6">
+                    <i class="fas fa-gamepad mr-3"></i>
+                    Gaming en Linux
+                </h3>
+                <div class="step-card">
+                    <div class="bg-pink-900/20 border border-pink-500/30 rounded-lg p-4 mb-4">
+                        <h4 class="font-bold text-pink-300 mb-2">🎮 Recomendaciones</h4>
+                        <p class="text-sm text-gray-300">
+                            Para jugar en Linux hoy en día, se recomienda no utilizar Wine de forma directa, 
+                            ni instalarlo desde tu página oficial.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h5 class="font-bold text-green-300 mb-2">✅ Usa estas herramientas:</h5>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• <strong>Steam</strong> con Proton</li>
+                                <li>• <strong>Lutris</strong> para otros launchers</li>
+                                <li>• <strong>Bottles</strong> para apps de Windows</li>
+                                <li>• <strong>Heroic Games Launcher</strong></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-red-300 mb-2">❌ Evita:</h5>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Wine directamente</li>
+                                <li>• PlayOnLinux (desactualizado)</li>
+                                <li>• Instalaciones manuales complejas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos Especiales -->
+            <div class="recommendation-section mb-8">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-6">
+                    <i class="fas fa-exclamation-triangle mr-3"></i>
+                    Casos Especiales
+                </h3>
+                <div class="step-card">
+                    <p class="text-gray-300 mb-4">
+                        En estos casos particulares, se pueden usar distribuciones más especializadas, 
+                        pero siempre con precaución y conocimiento previo.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4">
+                            <h4 class="font-bold text-orange-300 mb-2">⚡ Hardware Muy Antiguo</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• AntiX Linux</li>
+                                <li>• Puppy Linux</li>
+                                <li>• Alpine Linux</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                            <h4 class="font-bold text-blue-300 mb-2">🔒 Seguridad/Privacidad</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Tails (live only)</li>
+                                <li>• Qubes OS</li>
+                                <li>• Kodachi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Qué NO hacer -->
+            <div class="recommendation-section">
+                <h3 class="text-2xl font-bold text-red-400 mb-6">
+                    <i class="fas fa-ban mr-3"></i>
+                    Qué NO Hacer
+                </h3>
+                <div class="step-card">
+                    <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                        <h4 class="font-bold text-red-300 mb-3">⚠️ Advertencias Importantes</h4>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-times text-red-400 mr-3 mt-1"></i>
+                                <span>No uses tutoriales de más de un año, las distribuciones cambian rápidamente</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times text-red-400 mr-3 mt-1"></i>
+                                <span>No instales programas de terceros sin verificar su reputación</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times text-red-400 mr-3 mt-1"></i>
+                                <span>No uses repositorios no oficiales sin conocimiento</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times text-red-400 mr-3 mt-1"></i>
+                                <span>No te frustres: Linux puede parecer complicado al principio</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
+                        <p class="text-sm text-gray-300">
+                            <strong>Recuerda:</strong> Mantener tu sistema seguro y estable es fundamental. 
+                            Siempre usa la tienda de aplicaciones oficial y evita instalar software de fuentes desconocidas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects to cards
+        document.querySelectorAll('.distro-card, .step-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
